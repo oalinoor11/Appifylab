@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,25 +17,34 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     _checkVersion();
+    fcmSubscribe();
     super.initState();
   }
 
   void _checkVersion() async {
-    final newVersion = NewVersion(
-      androidId: "net.carboncodes.bornobangla",
-    );
+    final newVersion = NewVersion();
+
     final status = await newVersion.getVersionStatus();
-    newVersion.showUpdateDialog(
-      context: context,
-      versionStatus: status!,
-      dialogTitle: "Update Available",
-      dismissButtonText: "Skip",
-      dialogText: "You're missing out something!",
-      dismissAction: () {
-        Get.back();
-      },
-      updateButtonText: "Update Now",
-    );
+    print(status?.localVersion.toString());
+    print(status?.storeVersion.toString());
+
+    if(status?.localVersion.toString() != status?.storeVersion.toString())
+    {
+      print("Update availabe");
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status!,
+        dialogTitle: "Update Available",
+        dismissButtonText: "Skip",
+        dialogText: "You're missing out something!",
+        dismissAction: () {
+          Get.back();
+        },
+        updateButtonText: "Update Now",
+      );
+    }
+    else
+    {print("Update not availabe");}
   }
 
   @override
@@ -83,5 +93,9 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
+  }
+
+  fcmSubscribe() async {
+    FirebaseMessaging.instance.subscribeToTopic("all");
   }
 }
