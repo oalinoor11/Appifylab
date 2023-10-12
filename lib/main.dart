@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,9 +29,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Appifylab',
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)),
-      initialRoute: AppRoutes.HOMESCREEN,
+      theme: ThemeData(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)),
+      initialRoute: FirebaseAuth.instance.currentUser == null ? AppRoutes.HOMESCREEN : AppRoutes.HOMESCREEN,
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
     );
