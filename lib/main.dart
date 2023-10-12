@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'Core/AppRoutes.dart';
+import 'Core/notificationService.dart';
 
 void main() async {
-  // WidgetsBinding.instance?.ensureVisualUpdate();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   MobileAds.instance.initialize();
@@ -20,6 +20,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    NotificationService.init();
     super.initState();
   }
 
