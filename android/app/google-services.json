@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "928469945765",
-    "project_id": "bloodbox-49c5c",
-    "storage_bucket": "bloodbox-49c5c.appspot.com"
+    "project_number": "31218714361",
+    "project_id": "appifylab-b8a18",
+    "storage_bucket": "appifylab-b8a18.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:928469945765:android:abfe08695d85357f1c6c4c",
+        "mobilesdk_app_id": "1:31218714361:android:53a72f4071d403f07dc428",
         "android_client_info": {
-          "package_name": "net.carboncodes.bloodbox"
+          "package_name": "com.appifylab.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "928469945765-p0hqaai73196gddkkq5ajgfjro85bt17.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBjnkB5ENqf80dlncBK9yzP3_tNTdKFynM"
+          "current_key": "AIzaSyD3AAJiF-cv-A_R5iojh6PwHH1tNZ2Ng5g"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "928469945765-p0hqaai73196gddkkq5ajgfjro85bt17.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

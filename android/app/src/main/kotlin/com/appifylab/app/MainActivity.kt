@@ -1,4 +1,4 @@
-package com.oalinoor.bornobangla.bornobangla
+package com.appifylab.app
 
 import io.flutter.embedding.android.FlutterActivity
 

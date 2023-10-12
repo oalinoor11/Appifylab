@@ -1,1 +1,1 @@
-Initial app
+appifylab social app
