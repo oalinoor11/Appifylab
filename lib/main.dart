@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'Controllers/profile_controller.dart';
 import 'Core/AppRoutes.dart';
-import 'Core/notificationService.dart';
+import 'Presentation/AllScreen/Notifications/notificationService.dart';
 import 'Data/Models/profile_model.dart';
 
 void main() async {

@@ -1,10 +1,12 @@
 import 'package:Appifylab/Core/Customization.dart';
+import 'package:Appifylab/Presentation/AllScreen/Friends/FriendsPage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:new_version/new_version.dart';
 import 'Home/HomeScreen.dart';
+import 'Notifications/NotificationPage.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -89,8 +91,8 @@ class _MainScreenState extends State<MainScreen> {
           controller: pageController,
           children: [
             HomeScreen(),
-            HomeScreen(),
-            HomeScreen(),
+            FriendsPage(),
+            NotificationPage(),
             HomeScreen(),
           ],
           physics: NeverScrollableScrollPhysics(),
