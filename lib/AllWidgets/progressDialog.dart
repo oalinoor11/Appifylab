@@ -1,3 +1,4 @@
+import 'package:Appifylab/Core/Customization.dart';
 import 'package:flutter/material.dart';
 
 class ProgressDialog extends StatelessWidget
@@ -21,9 +22,9 @@ class ProgressDialog extends StatelessWidget
           child: Row(
             children: [
               SizedBox(width: 6.0),
-              CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.green),),
+              CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(primaryColor),),
               SizedBox(width: 26.0,),
-              Text(message, style: TextStyle(color: Colors.green, fontSize: 12.0),),
+              Text(message, style: TextStyle(color: primaryColor, fontSize: 12.0),),
             ],
           ),
         ),
