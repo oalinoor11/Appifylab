@@ -1,3 +1,4 @@
+import 'package:Appifylab/Core/Customization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,13 +53,13 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.green,
+          selectedItemColor: primaryColor,
           onTap: (index) {
             pageController.jumpToPage(index);
             setState(() {
               currentIndex = index;
             });
-            // pageController.animateToPage(index, duration: Duration(seconds: 0), curve: Curves.ease);
+            // pageController.animateToPage(index, duration: Duration(seconds: 4), curve: Curves.ease);
           },
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
@@ -69,14 +70,26 @@ class _MainScreenState extends State<MainScreen> {
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
+              icon: Icon(Icons.group),
+              label: "Friends",
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: "Notifications",
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: "Menu",
             ),
           ],
         ),
         body: PageView(
           controller: pageController,
           children: [
+            HomeScreen(),
+            HomeScreen(),
             HomeScreen(),
             HomeScreen(),
           ],
