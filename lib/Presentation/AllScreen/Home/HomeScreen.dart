@@ -159,15 +159,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 children: [
                                                   InkWell(
                                                       onTap: (){
-                                                        ScaffoldMessenger.of(context).showSnackBar(
-                                                          SnackBar(
-                                                            backgroundColor: Colors.red,
-                                                            content: Text(
-                                                              "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                                          ),
-                                                        );
+                                                        if(post.posterID != ProfileController.to.profile.value!.id){
+                                                          ScaffoldMessenger.of(context).showSnackBar(
+                                                            SnackBar(
+                                                              backgroundColor: Colors.red,
+                                                              content: Text(
+                                                                "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                                                            ),
+                                                          );
+                                                        }
+                                                        else{
+                                                          Get.toNamed(AppRoutes.EDITEPOST, arguments: post);
+                                                        }
                                                       },
-                                                      child: Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,)),
+                                                      child: Icon(post.posterID != ProfileController.to.profile.value!.id ? Icons.more_horiz : Icons.edit, color: Colors.black.withOpacity(0.5), size: post.posterID != ProfileController.to.profile.value!.id ? 25 : 20,)),
                                                   SizedBox(width: 15,),
                                                   InkWell(
                                                       onTap: (){

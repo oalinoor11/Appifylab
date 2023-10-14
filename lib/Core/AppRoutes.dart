@@ -7,6 +7,7 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import '../Presentation/AllScreen/Authentication/ForgetScreen.dart';
 import '../Presentation/AllScreen/MainScreen.dart';
+import '../Presentation/Posts/EditPost.dart';
 class AppRoutes {
   static const String MAINSCREEN = "/mainscreen";
   static const String HOMESCREEN = "/homescreen";
@@ -14,6 +15,7 @@ class AppRoutes {
   static const String SIGNUPSCREEN = "/signupscreen";
   static const String FORGETSCREEN = "/forgetscreen";
   static const String CREATEPOST = "/createpost";
+  static const String EDITEPOST = "/edittepost";
 
   static List<GetPage> routes = [
     GetPage(
@@ -44,6 +46,11 @@ class AppRoutes {
     GetPage(
         name: CREATEPOST,
         page: () => CreatePost(),
+        transitionDuration: Duration(milliseconds: 100),
+        transition: Transition.cupertino),
+    GetPage(
+        name: EDITEPOST,
+        page: () => EditPost(),
         transitionDuration: Duration(milliseconds: 100),
         transition: Transition.cupertino),
 
