@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-                                    child: Image.asset("assets/sampleprofilepicture.png", fit: BoxFit.cover,)),
+                                    child: Image.network(ProfileController.to.profile.value!.profilePicture.toString(), fit: BoxFit.cover,)),
                               ),
                               SizedBox(width: 10,),
                               Text("What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),)
