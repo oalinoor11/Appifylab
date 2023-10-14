@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ProfileController.to.profile.value == null ? Center(child: CircularProgressIndicator()) : Column(
+      body: Obx(()=>ProfileController.to.profile.value == null ? Center(child: CircularProgressIndicator()) : Column(
         children: [
           Container(height: MediaQuery.of(context).padding.top, color: Colors.white,),
           Padding(
@@ -139,7 +139,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,),
+                                      InkWell(
+                                          onTap: (){
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                backgroundColor: Colors.red,
+                                                content: Text(
+                                                  "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                                              ),
+                                            );
+                                          },
+                                          child: Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,)),
                                       SizedBox(width: 15,),
                                       InkWell(
                                           onTap: (){
@@ -229,11 +239,92 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(height: 10,),
                               Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
+                                  InkWell(
+                                    onLongPress: (){
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              contentPadding: EdgeInsets.zero,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                                              content: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: InkWell(
+                                                      onTap: (){
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                          height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                          child: ClipRRect(
+                                                              borderRadius: BorderRadius.circular(100),
+                                                              child: Image.asset("assets/likereacticon.gif", fit: BoxFit.cover,))),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.asset("assets/lovereacticon.gif", fit: BoxFit.cover,))),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.asset("assets/hahareacticon.gif", fit: BoxFit.cover,))),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.asset("assets/wowreacticon.gif", fit: BoxFit.cover,))),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.asset("assets/cryreacticon.gif", fit: BoxFit.cover,))),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                        child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(100),
+                                                            child: Image.asset("assets/angryreacticon.gif", fit: BoxFit.cover,))),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
+                                        Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
+                                      ],
+                                    ),
                                   ),
                                   Row(
                                     children: [
@@ -785,7 +876,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
   _signOutDialog() {
