@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Appifylab/Core/AppRoutes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../Controllers/profile_controller.dart';
 import '../../../Core/Customization.dart';
@@ -271,8 +274,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   Navigator.pop(context);
                                                                 },
                                                                 child: InkWell(
-                                                                  onTap: (){
+                                                                  onTap: () async {
+                                                                    if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                                      post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                                      await post.update();
+
+                                                                      post.reactions = [
+                                                                        {
+                                                                          "id": ProfileController.to.profile.value!.id,
+                                                                          "name": ProfileController.to.profile.value!.name,
+                                                                          "image": ProfileController.to.profile.value!.profilePicture,
+                                                                          "verified": ProfileController.to.profile.value!.verified,
+                                                                          "reaction": "Like",
+                                                                        },
+                                                                        ...post.reactions
+                                                                      ];
+                                                                      await post.update();
+                                                                      sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} liked to your ${post.image == "" ? "post" : "photo"}");
+                                                                      Navigator.pop(context);
+                                                                    }
+                                                                    else {post.reactions = [
+                                                                      {
+                                                                        "id": ProfileController.to.profile.value!.id,
+                                                                        "name": ProfileController.to.profile.value!.name,
+                                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                                        "reaction": "Like",
+                                                                      },
+                                                                      ...post.reactions
+                                                                    ];
+                                                                    await post.update();
+                                                                    sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} liked to your ${post.image == "" ? "post" : "photo"}");
                                                                     Navigator.pop(context);
+                                                                    }
                                                                   },
                                                                   child: Container(
                                                                       height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
@@ -282,8 +316,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                               ),
                                                               InkWell(
-                                                                onTap: (){
+                                                                onTap: () async {
+                                                                  if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                                    post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                                    await post.update();
+
+                                                                    post.reactions = [
+                                                                      {
+                                                                        "id": ProfileController.to.profile.value!.id,
+                                                                        "name": ProfileController.to.profile.value!.name,
+                                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                                        "reaction": "Love",
+                                                                      },
+                                                                      ...post.reactions
+                                                                    ];
+                                                                    await post.update();
+                                                                    sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} loved to your ${post.image == "" ? "post" : "photo"}");
+                                                                    Navigator.pop(context);
+                                                                  }
+                                                                  else {post.reactions = [
+                                                                    {
+                                                                      "id": ProfileController.to.profile.value!.id,
+                                                                      "name": ProfileController.to.profile.value!.name,
+                                                                      "image": ProfileController.to.profile.value!.profilePicture,
+                                                                      "verified": ProfileController.to.profile.value!.verified,
+                                                                      "reaction": "Love",
+                                                                    },
+                                                                    ...post.reactions
+                                                                  ];
+                                                                  await post.update();
+                                                                  sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} loved to your ${post.image == "" ? "post" : "photo"}");
                                                                   Navigator.pop(context);
+                                                                  }
                                                                 },
                                                                 child: Container(
                                                                     height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
@@ -292,8 +357,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Image.asset("assets/lovereacticon.gif", fit: BoxFit.cover,))),
                                                               ),
                                                               InkWell(
-                                                                onTap: (){
+                                                                onTap: () async {
+                                                                  if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                                    post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                                    await post.update();
+
+                                                                    post.reactions = [
+                                                                      {
+                                                                        "id": ProfileController.to.profile.value!.id,
+                                                                        "name": ProfileController.to.profile.value!.name,
+                                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                                        "reaction": "Haha",
+                                                                      },
+                                                                      ...post.reactions
+                                                                    ];
+                                                                    await post.update();
+                                                                    sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Haha to your ${post.image == "" ? "post" : "photo"}");
+                                                                    Navigator.pop(context);
+                                                                  }
+                                                                  else {post.reactions = [
+                                                                    {
+                                                                      "id": ProfileController.to.profile.value!.id,
+                                                                      "name": ProfileController.to.profile.value!.name,
+                                                                      "image": ProfileController.to.profile.value!.profilePicture,
+                                                                      "verified": ProfileController.to.profile.value!.verified,
+                                                                      "reaction": "Haha",
+                                                                    },
+                                                                    ...post.reactions
+                                                                  ];
+                                                                  await post.update();
+                                                                  sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted haha to your ${post.image == "" ? "post" : "photo"}");
                                                                   Navigator.pop(context);
+                                                                  }
                                                                 },
                                                                 child: Container(
                                                                     height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
@@ -302,8 +398,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Image.asset("assets/hahareacticon.gif", fit: BoxFit.cover,))),
                                                               ),
                                                               InkWell(
-                                                                onTap: (){
+                                                                onTap: () async {
+                                                                  if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                                    post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                                    await post.update();
+
+                                                                    post.reactions = [
+                                                                      {
+                                                                        "id": ProfileController.to.profile.value!.id,
+                                                                        "name": ProfileController.to.profile.value!.name,
+                                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                                        "reaction": "Wow",
+                                                                      },
+                                                                      ...post.reactions
+                                                                    ];
+                                                                    await post.update();
+                                                                    sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Wow to your ${post.image == "" ? "post" : "photo"}");
+                                                                    Navigator.pop(context);
+                                                                  }
+                                                                  else {post.reactions = [
+                                                                    {
+                                                                      "id": ProfileController.to.profile.value!.id,
+                                                                      "name": ProfileController.to.profile.value!.name,
+                                                                      "image": ProfileController.to.profile.value!.profilePicture,
+                                                                      "verified": ProfileController.to.profile.value!.verified,
+                                                                      "reaction": "Wow",
+                                                                    },
+                                                                    ...post.reactions
+                                                                  ];
+                                                                  await post.update();
+                                                                  sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Wow to your ${post.image == "" ? "post" : "photo"}");
                                                                   Navigator.pop(context);
+                                                                  }
                                                                 },
                                                                 child: Container(
                                                                     height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
@@ -312,8 +439,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Image.asset("assets/wowreacticon.gif", fit: BoxFit.cover,))),
                                                               ),
                                                               InkWell(
-                                                                onTap: (){
+                                                                onTap: () async {
+                                                                  if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                                    post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                                    await post.update();
+
+                                                                    post.reactions = [
+                                                                      {
+                                                                        "id": ProfileController.to.profile.value!.id,
+                                                                        "name": ProfileController.to.profile.value!.name,
+                                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                                        "reaction": "Sad",
+                                                                      },
+                                                                      ...post.reactions
+                                                                    ];
+                                                                    await post.update();
+                                                                    sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Sad to your ${post.image == "" ? "post" : "photo"}");
+                                                                    Navigator.pop(context);
+                                                                  }
+                                                                  else {post.reactions = [
+                                                                    {
+                                                                      "id": ProfileController.to.profile.value!.id,
+                                                                      "name": ProfileController.to.profile.value!.name,
+                                                                      "image": ProfileController.to.profile.value!.profilePicture,
+                                                                      "verified": ProfileController.to.profile.value!.verified,
+                                                                      "reaction": "Sad",
+                                                                    },
+                                                                    ...post.reactions
+                                                                  ];
+                                                                  await post.update();
+                                                                  sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Sad to your ${post.image == "" ? "post" : "photo"}");
                                                                   Navigator.pop(context);
+                                                                  }
                                                                 },
                                                                 child: Container(
                                                                     height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
@@ -322,8 +480,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         child: Image.asset("assets/cryreacticon.gif", fit: BoxFit.cover,))),
                                                               ),
                                                               InkWell(
-                                                                onTap: (){
+                                                                onTap: () async {
+                                                                  if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                                    post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                                    await post.update();
+
+                                                                    post.reactions = [
+                                                                      {
+                                                                        "id": ProfileController.to.profile.value!.id,
+                                                                        "name": ProfileController.to.profile.value!.name,
+                                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                                        "reaction": "Angry",
+                                                                      },
+                                                                      ...post.reactions
+                                                                    ];
+                                                                    await post.update();
+                                                                    sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Angry to your ${post.image == "" ? "post" : "photo"}");
+                                                                    Navigator.pop(context);
+                                                                  }
+                                                                  else {post.reactions = [
+                                                                    {
+                                                                      "id": ProfileController.to.profile.value!.id,
+                                                                      "name": ProfileController.to.profile.value!.name,
+                                                                      "image": ProfileController.to.profile.value!.profilePicture,
+                                                                      "verified": ProfileController.to.profile.value!.verified,
+                                                                      "reaction": "Angry",
+                                                                    },
+                                                                    ...post.reactions
+                                                                  ];
+                                                                  await post.update();
+                                                                  sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} reacted Angry to your ${post.image == "" ? "post" : "photo"}");
                                                                   Navigator.pop(context);
+                                                                  }
                                                                 },
                                                                 child: Container(
                                                                     height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
@@ -336,7 +525,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         );
                                                       });
                                                 },
-                                                child: Row(
+                                                onTap: () async {
+                                                  if(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0){
+                                                    post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
+                                                    await post.update();
+                                                  }
+                                                  else {post.reactions = [
+                                                    {
+                                                      "id": ProfileController.to.profile.value!.id,
+                                                      "name": ProfileController.to.profile.value!.name,
+                                                      "image": ProfileController.to.profile.value!.profilePicture,
+                                                      "verified": ProfileController.to.profile.value!.verified,
+                                                      "reaction": "Like",
+                                                    },
+                                                    ...post.reactions
+                                                  ];
+                                                  await post.update();}
+                                                  sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} liked to your ${post.image == "" ? "post" : "photo"}");
+                                                },
+                                                child: post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0 ? Row(
+                                                  children: [
+                                                    Image.asset(post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Like" ? "assets/likereacticon.png" : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Love" ? "assets/lovereacticon.png" : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Haha" ? "assets/hahareacticon.png" : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Wow" ? "assets/wowreacticon.png" : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Sad" ? "assets/cryreacticon.png" : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Angry" ? "assets/angryreacticon.png" : "assets/logo.png", height: 20, width: 20,),
+                                                    Text(" ${post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"]}", style: TextStyle(color: post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Like" ? primaryColor : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Love" ? Colors.red : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Haha" ? Colors.amber : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Wow" ? Colors.amber : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Sad" ? Colors.amber : post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).toList().first["reaction"] == "Angry" ? Colors.deepOrange : Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
+                                                  ],
+                                                ) : Row(
                                                   children: [
                                                     Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
                                                     Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
@@ -461,5 +673,29 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         });
+  }
+  sendReactPush(String channel, String title, String body) async {
+    if(channel != ProfileController.to.profile.value!.id){
+      var response = await http.post(
+          Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "key=AAAAB0THxvk:APA91bGuEA14fgLQorOjtIIPMkwIjaYYBEF1E0HgMkhmgUNqfydjYeuxX1EpPi6sphube1JRetbaW-jlWTnVgW7J6N4C8Ez4CrG421A8cg85QVPl4xuIPnHMJF38T8_0boZV0DSUorF_"
+          },
+          body: jsonEncode({
+            "to": "/topics/$channel",
+            "notification": {
+              "title": title,
+              "body": body,
+              "mutable_content": true,
+            },
+            "data": {
+              // "url": "<url of media image>",
+              // "dl": "<deeplink action on tap of notification>"
+            }
+          })
+      );
+      print(response.body);
+    }
   }
 }
