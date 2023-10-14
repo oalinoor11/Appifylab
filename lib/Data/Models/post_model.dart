@@ -1,3 +1,5 @@
+import 'package:Appifylab/Controllers/profile_controller.dart';
+
 import '../firebase_collections.dart';
 
 class PostModel {
@@ -81,6 +83,22 @@ class PostModel {
     try {
       return FirebaseCollections.POSTCOLLECTION
           .orderBy("timeStamps", descending: true)
+          .snapshots().map((snapshot) {
+        return snapshot.docs.map((doc) {
+          return PostModel.fromJson(doc.data() as Map<String, dynamic>)
+            ..id = doc.id;
+        }).toList();
+      });
+    } on Exception catch (e) {
+      rethrow;
+    }
+  }
+
+  static Stream<List<PostModel>> getMyPosts() {
+    try {
+      return FirebaseCollections.POSTCOLLECTION
+          .orderBy("timeStamps", descending: true)
+      .where("posterID", isEqualTo: ProfileController.to.profile.value!.id)
           .snapshots().map((snapshot) {
         return snapshot.docs.map((doc) {
           return PostModel.fromJson(doc.data() as Map<String, dynamic>)

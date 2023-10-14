@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:new_version/new_version.dart';
 import 'Home/HomeScreen.dart';
 import 'Notifications/NotificationPage.dart';
+import 'Profile/MyProfile.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -93,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
             HomeScreen(),
             FriendsPage(),
             NotificationPage(),
-            HomeScreen(),
+            MyProfile(),
           ],
           physics: NeverScrollableScrollPhysics(),
         ),

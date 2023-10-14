@@ -16,12 +16,12 @@ import '../../../Core/Customization.dart';
 import '../../../Data/Models/post_model.dart';
 import '../../../Data/Models/profile_model.dart';
 
-class HomeScreen extends StatefulWidget {
+class MyProfile extends StatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -34,88 +34,32 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Obx(()=>ProfileController.to.profile.value == null ? Center(child: CircularProgressIndicator()) : Column(
         children: [
           Container(height: MediaQuery.of(context).padding.top, color: Colors.white,),
-          InkWell(
-            onTap: (){
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.red,
-                  content: Text(
-                    "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("My Posts", style: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.bold),),
+                InkWell(
+                  onTap: (){
+                    _signOutDialog();
+                  },
+                  child: Container(
+                      height: 35, width: 35,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(100)
+                      ),
+                      child: Center(child: Icon(Icons.logout, color: Colors.red, size: 20, ))),
                 ),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("facebook", style: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.bold),),
-                  Row(
-                    children: [
-                      Container(
-                          height: 35, width: 35,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(100)
-                          ),
-                          child: Center(child: Icon(Icons.add, color: Colors.black, size: 25, ))),
-                      SizedBox(width: 10,),
-                      Container(
-                          height: 35, width: 35,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(100)
-                          ),
-                          child: Center(child: Icon(Icons.search, color: Colors.black, size: 25, ))),
-                      SizedBox(width: 10,),
-                      Container(
-                          height: 35, width: 35,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(100)
-                          ),
-                          child: Center(child: Icon(Icons.speaker_notes, color: Colors.black, size: 20, ))),
-                    ],
-                  )
-                ],
-              ),
+              ],
             ),
           ),
+          Container(height: 4, color: Colors.grey[300],),
           Expanded(
             child: SingleChildScrollView(
               child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-                children: [Container(),
-                  InkWell(
-                    onTap: (){
-                      Get.toNamed(AppRoutes.CREATEPOST);
-                  },
-                    child: Container(height: 70, color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Image.asset("assets/sampleprofilepicture.png", fit: BoxFit.cover,)),
-                              ),
-                              SizedBox(width: 10,),
-                              Text("What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),)
-                            ],
-                          ),
-                          Icon(Icons.photo_library, color: Colors.green, size: 28,)
-                        ],
-                      ),
-                    ),
-                    ),
-                  ),
-                  Container(height: 8, color: Colors.grey[300],),
-
+                children: [
+                  SizedBox(height: 10,),
                   StreamBuilder<List<PostModel>>(
                       builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
                         if (snapshot.hasData) {
@@ -240,8 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     post.reactions.where((element) => element["reaction"] == "Like").length > 0 ? Padding(
                                                       padding: EdgeInsets.only(right: 1),
                                                       child: Container(
-                                                          height: 18, width: 18,
-                                                          child: Image.asset("assets/likereacticon.png"),),
+                                                        height: 18, width: 18,
+                                                        child: Image.asset("assets/likereacticon.png"),),
                                                     ) : Container(),
                                                     post.reactions.where((element) => element["reaction"] == "Love").length > 0 ? Padding(
                                                       padding: EdgeInsets.only(right: 1),
@@ -568,16 +512,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   }
                                                   else {
                                                     post.reactions = [
-                                                    {
-                                                      "id": ProfileController.to.profile.value!.id,
-                                                      "name": ProfileController.to.profile.value!.name,
-                                                      "image": ProfileController.to.profile.value!.profilePicture,
-                                                      "verified": ProfileController.to.profile.value!.verified,
-                                                      "reaction": "Like",
-                                                    },
-                                                    ...post.reactions
-                                                  ];
-                                                  await post.update();}
+                                                      {
+                                                        "id": ProfileController.to.profile.value!.id,
+                                                        "name": ProfileController.to.profile.value!.name,
+                                                        "image": ProfileController.to.profile.value!.profilePicture,
+                                                        "verified": ProfileController.to.profile.value!.verified,
+                                                        "reaction": "Like",
+                                                      },
+                                                      ...post.reactions
+                                                    ];
+                                                    await post.update();}
                                                   sendReactPush(post.posterID, "New Reaction", "${ProfileController.to.profile.value!.name} liked to your ${post.image == "" ? "post" : "photo"}");
                                                 },
                                                 child: post.reactions.where((element) => element["id"] == ProfileController.to.profile.value!.id).length > 0 ? Row(
@@ -636,7 +580,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return CircularProgressIndicator();
                         }
                       },
-                      stream: PostModel.getPosts()),
+                      stream: PostModel.getMyPosts()),
                 ],
               ),
             ),
