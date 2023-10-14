@@ -219,29 +219,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                             padding: const EdgeInsets.symmetric(horizontal: 5.0),
                                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Row(
+                                                post.reactions.length < 1 ? Container() : Row(
                                                   children: [
-                                                    Padding(
+                                                    post.reactions.where((element) => element["reaction"] == "Like").length > 0 ? Padding(
                                                       padding: EdgeInsets.only(right: 1),
                                                       child: Container(
                                                           height: 18, width: 18,
-                                                          decoration: BoxDecoration(
-                                                              color: primaryColor,
-                                                              borderRadius: BorderRadius.circular(100)
-                                                          ),
-                                                          child: Center(child: Icon(Icons.thumb_up, color: Colors.white, size: 12,))),
-                                                    ),
-                                                    Padding(
+                                                          child: Image.asset("assets/likereacticon.png"),),
+                                                    ) : Container(),
+                                                    post.reactions.where((element) => element["reaction"] == "Love").length > 0 ? Padding(
                                                       padding: EdgeInsets.only(right: 1),
                                                       child: Container(
-                                                          height: 18, width: 18,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.red,
-                                                              borderRadius: BorderRadius.circular(100)
-                                                          ),
-                                                          child: Center(child: Icon(Icons.favorite, color: Colors.white, size: 13,))),
-                                                    ),
-                                                    Text(" 61.2k", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
+                                                        height: 18, width: 18,
+                                                        child: Image.asset("assets/lovereacticon.png"),),
+                                                    ) : Container(),
+                                                    post.reactions.where((element) => element["reaction"] == "Haha").length > 0 ? Padding(
+                                                      padding: EdgeInsets.only(right: 1),
+                                                      child: Container(
+                                                        height: 18, width: 18,
+                                                        child: Image.asset("assets/hahareacticon.png"),),
+                                                    ) : Container(),
+                                                    post.reactions.where((element) => element["reaction"] == "Wow").length > 0 ? Padding(
+                                                      padding: EdgeInsets.only(right: 1),
+                                                      child: Container(
+                                                        height: 18, width: 18,
+                                                        child: Image.asset("assets/wowreacticon.png"),),
+                                                    ) : Container(),
+                                                    post.reactions.where((element) => element["reaction"] == "Sad").length > 0 ? Padding(
+                                                      padding: EdgeInsets.only(right: 1),
+                                                      child: Container(
+                                                        height: 18, width: 18,
+                                                        child: Image.asset("assets/cryreacticon.png"),),
+                                                    ) : Container(),
+                                                    post.reactions.where((element) => element["reaction"] == "Angry").length > 0 ? Padding(
+                                                      padding: EdgeInsets.only(right: 1),
+                                                      child: Container(
+                                                        height: 18, width: 18,
+                                                        child: Image.asset("assets/angryreacticon.png"),),
+                                                    ) : Container(),
+                                                    Text(" ${post.reactions.length}", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
                                                   ],
                                                 ),
                                                 Row(
