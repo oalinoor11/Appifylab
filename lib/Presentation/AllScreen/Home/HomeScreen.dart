@@ -267,7 +267,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Text("1.9k comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
+                                                    post.comments.length < 1 ? Container() : InkWell(
+                                                        onTap: (){
+                                                          Get.toNamed(AppRoutes.COMMENTPAGE, arguments: post);
+                                                        },
+                                                        child: Text("${post.comments.length} comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),)),
                                                     SizedBox(width: 15,),
                                                     Text("10 shares", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
                                                   ],
@@ -551,7 +555,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     post.reactions.removeWhere((element) => element["id"] == ProfileController.to.profile.value!.id);
                                                     await post.update();
                                                   }
-                                                  else {post.reactions = [
+                                                  else {
+                                                    post.reactions = [
                                                     {
                                                       "id": ProfileController.to.profile.value!.id,
                                                       "name": ProfileController.to.profile.value!.name,
@@ -576,11 +581,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ],
                                                 ),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
-                                                  Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                                ],
+                                              InkWell(
+                                                onTap: (){
+                                                  Get.toNamed(AppRoutes.COMMENTPAGE, arguments: post);
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
+                                                    Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
+                                                  ],
+                                                ),
                                               ),
                                               InkWell(
                                                 onTap: (){

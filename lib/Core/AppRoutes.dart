@@ -1,6 +1,7 @@
 import 'package:Appifylab/Presentation/AllScreen/Authentication/LoginScreen.dart';
 import 'package:Appifylab/Presentation/AllScreen/Authentication/SignupScreen.dart';
 import 'package:Appifylab/Presentation/AllScreen/Home/HomeScreen.dart';
+import 'package:Appifylab/Presentation/Posts/CommentPage.dart';
 import 'package:Appifylab/Presentation/Posts/CreatePost.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
@@ -16,6 +17,7 @@ class AppRoutes {
   static const String FORGETSCREEN = "/forgetscreen";
   static const String CREATEPOST = "/createpost";
   static const String EDITEPOST = "/edittepost";
+  static const String COMMENTPAGE = "/commentpage";
 
   static List<GetPage> routes = [
     GetPage(
@@ -51,6 +53,11 @@ class AppRoutes {
     GetPage(
         name: EDITEPOST,
         page: () => EditPost(),
+        transitionDuration: Duration(milliseconds: 100),
+        transition: Transition.cupertino),
+    GetPage(
+        name: COMMENTPAGE,
+        page: () => CommentPage(),
         transitionDuration: Duration(milliseconds: 100),
         transition: Transition.cupertino),
 
