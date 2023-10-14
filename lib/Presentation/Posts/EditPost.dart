@@ -7,14 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:readmore/readmore.dart';
 import 'dart:io';
 
 import '../../../Controllers/profile_controller.dart';
 import '../../../Core/Customization.dart';
-import '../../../Data/Models/profile_model.dart';
 
 class EditPost extends StatefulWidget {
   @override

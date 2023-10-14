@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:http/http.dart' as http;
 
