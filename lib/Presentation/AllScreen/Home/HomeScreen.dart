@@ -10,6 +10,7 @@ import 'package:readmore/readmore.dart';
 
 import '../../../Controllers/profile_controller.dart';
 import '../../../Core/Customization.dart';
+import '../../../Data/Models/post_model.dart';
 import '../../../Data/Models/profile_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -101,781 +102,287 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(height: 8, color: Colors.grey[300],),
 
-                  Container(color: Colors.white,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                          child: Column(
-                            children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 40, width: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
-                                          borderRadius: BorderRadius.circular(100),
-                                        ),
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(100),
-                                            child: Image.network(ProfileController.to.profile.value!.profilePicture.toString(), fit: BoxFit.cover,)),
-                                      ),
-                                      SizedBox(width: 10,),
-                                      Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(ProfileController.to.profile.value!.name.toString(), style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
-                                              SizedBox(width: 3,),
-                                              ProfileController.to.profile.value!.verified.toString() == "1" ? Icon(Icons.verified, color: primaryColor, size: 15,) : Container(),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text("15h • ", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.normal),),
-                                              Icon(Icons.public, color: Colors.black.withOpacity(0.5), size: 15,),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      InkWell(
-                                          onTap: (){
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                backgroundColor: Colors.red,
-                                                content: Text(
-                                                  "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                              ),
-                                            );
-                                          },
-                                          child: Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,)),
-                                      SizedBox(width: 15,),
-                                      InkWell(
-                                          onTap: (){
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                backgroundColor: Colors.red,
-                                                content: Text(
-                                                  "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                              ),
-                                            );
-                                          },
-                                          child: Icon(Icons.close, color: Colors.black.withOpacity(0.5), size: 25,)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10,),
-                              ReadMoreText(
-                                'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-                                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),
-                                trimLines: 3,
-                                colorClickableText: Colors.grey,
-                                trimMode: TrimMode.Line,
-                                trimCollapsedText: '... See more',
-                                trimExpandedText: '... See less',
-                                moreStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                                lessStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                              ),
-                              SizedBox(height: 10,),
-                            ],
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 20,
-                            child: Image.asset("assets/logo.png", fit: BoxFit.cover,),
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  StreamBuilder<List<PostModel>>(
+                      builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            primary: false,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              PostModel post = snapshot.data![index];
+                              return Container(color: Colors.white,
+                                child: Column(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: primaryColor,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.thumb_up, color: Colors.white, size: 12,))),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.favorite, color: Colors.white, size: 13,))),
-                                        ),
-                                        Text(" 61.2k", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text("1.9k comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                        SizedBox(width: 15,),
-                                        Text("10 shares", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 10,),
-                              Container(width: MediaQuery.of(context).size.width - 20, color: Colors.grey[300], height: 0.5,),
-                              SizedBox(height: 10,),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  InkWell(
-                                    onLongPress: (){
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              contentPadding: EdgeInsets.zero,
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-                                              content: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
+                                      child: Column(
+                                        children: [
+                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: (){
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: InkWell(
-                                                      onTap: (){
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Container(
-                                                          height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                                                          child: ClipRRect(
-                                                              borderRadius: BorderRadius.circular(100),
-                                                              child: Image.asset("assets/likereacticon.gif", fit: BoxFit.cover,))),
+                                                  Container(
+                                                    height: 40, width: 40,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
+                                                      borderRadius: BorderRadius.circular(100),
                                                     ),
+                                                    child: ClipRRect(
+                                                        borderRadius: BorderRadius.circular(100),
+                                                        child: Image.network(post.posterImage, fit: BoxFit.cover,)),
                                                   ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                                                        child: ClipRRect(
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            child: Image.asset("assets/lovereacticon.gif", fit: BoxFit.cover,))),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                                                        child: ClipRRect(
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            child: Image.asset("assets/hahareacticon.gif", fit: BoxFit.cover,))),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                                                        child: ClipRRect(
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            child: Image.asset("assets/wowreacticon.gif", fit: BoxFit.cover,))),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                                                        child: ClipRRect(
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            child: Image.asset("assets/cryreacticon.gif", fit: BoxFit.cover,))),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: (){
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                        height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                                                        child: ClipRRect(
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            child: Image.asset("assets/angryreacticon.gif", fit: BoxFit.cover,))),
+                                                  SizedBox(width: 10,),
+                                                  Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Text(post.posterName, style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
+                                                          SizedBox(width: 3,),
+                                                          post.posterVerified == "1" ? Icon(Icons.verified, color: primaryColor, size: 15,) : Container(),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text("${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(post.timeStamps), isUtc: false)).inMinutes.toString() == "0" ? "now" : int.parse(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(post.timeStamps), isUtc: false)).inMinutes.toString()) < 60 ? "${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(post.timeStamps), isUtc: false)).inMinutes.toString()} m" : int.parse(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(post.timeStamps), isUtc: false)).inHours.toString()) < 24 ? "${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(post.timeStamps), isUtc: false)).inHours.toString()} h" : "${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(int.parse(post.timeStamps), isUtc: false)).inDays.toString()} d"} • ", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.normal),),
+                                                          post.privacy == "Public" ? Icon(Icons.public, color: Colors.black.withOpacity(0.5), size: 15,) : Container(),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            );
-                                          });
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
-                                        Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(
-                                            "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                        ),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.share, color: Colors.black.withOpacity(0.5), size: 20,),
-                                        Text(" Share", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(height: 8, color: Colors.grey[300],),
-                      ],
-                    ),
-                  ),
-                  Container(color: Colors.white,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                          child: Column(
-                            children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 40, width: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
-                                          borderRadius: BorderRadius.circular(100),
-                                        ),
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(100),
-                                            child: Image.network(ProfileController.to.profile.value!.profilePicture.toString(), fit: BoxFit.cover,)),
-                                      ),
-                                      SizedBox(width: 10,),
-                                      Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(ProfileController.to.profile.value!.name.toString(), style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
-                                              SizedBox(width: 3,),
-                                              ProfileController.to.profile.value!.verified.toString() == "1" ? Icon(Icons.verified, color: primaryColor, size: 15,) : Container(),
+                                              Row(
+                                                children: [
+                                                  InkWell(
+                                                      onTap: (){
+                                                        ScaffoldMessenger.of(context).showSnackBar(
+                                                          SnackBar(
+                                                            backgroundColor: Colors.red,
+                                                            content: Text(
+                                                              "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,)),
+                                                  SizedBox(width: 15,),
+                                                  InkWell(
+                                                      onTap: (){
+                                                        ScaffoldMessenger.of(context).showSnackBar(
+                                                          SnackBar(
+                                                            backgroundColor: Colors.red,
+                                                            content: Text(
+                                                              "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Icon(Icons.close, color: Colors.black.withOpacity(0.5), size: 25,)),
+                                                ],
+                                              ),
                                             ],
                                           ),
-                                          Row(
+                                          post.caption == "" ? SizedBox() : SizedBox(height: 10,),
+                                          post.caption == "" ? SizedBox() : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: ReadMoreText(
+                                              post.caption,
+                                              style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),
+                                              trimLines: 3,
+                                              colorClickableText: Colors.grey,
+                                              trimMode: TrimMode.Line,
+                                              trimCollapsedText: '... See more',
+                                              trimExpandedText: '... See less',
+                                              moreStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
+                                              lessStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
+                                            ),
+                                          ),
+                                          SizedBox(height: 10,),
+                                        ],
+                                      ),
+                                    ),
+                                    post.image == "" ? SizedBox() : Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
+                                    post.image == "" ? SizedBox() : Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width - 20,
+                                        child: Image.network(post.image, fit: BoxFit.cover,),
+                                      ),
+                                    ),
+                                    Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,), Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(right: 1),
+                                                      child: Container(
+                                                          height: 18, width: 18,
+                                                          decoration: BoxDecoration(
+                                                              color: primaryColor,
+                                                              borderRadius: BorderRadius.circular(100)
+                                                          ),
+                                                          child: Center(child: Icon(Icons.thumb_up, color: Colors.white, size: 12,))),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(right: 1),
+                                                      child: Container(
+                                                          height: 18, width: 18,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.red,
+                                                              borderRadius: BorderRadius.circular(100)
+                                                          ),
+                                                          child: Center(child: Icon(Icons.favorite, color: Colors.white, size: 13,))),
+                                                    ),
+                                                    Text(" 61.2k", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text("1.9k comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
+                                                    SizedBox(width: 15,),
+                                                    Text("10 shares", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 10,),
+                                          Container(width: MediaQuery.of(context).size.width - 20, color: Colors.grey[300], height: 0.5,),
+                                          SizedBox(height: 10,),
+                                          Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              Text("15h • ", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.normal),),
-                                              Icon(Icons.public, color: Colors.black.withOpacity(0.5), size: 15,),
+                                              InkWell(
+                                                onLongPress: (){
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return AlertDialog(
+                                                          contentPadding: EdgeInsets.zero,
+                                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                                                          content: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: InkWell(
+                                                                  onTap: (){
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child: Container(
+                                                                      height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                                      child: ClipRRect(
+                                                                          borderRadius: BorderRadius.circular(100),
+                                                                          child: Image.asset("assets/likereacticon.gif", fit: BoxFit.cover,))),
+                                                                ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Container(
+                                                                    height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(100),
+                                                                        child: Image.asset("assets/lovereacticon.gif", fit: BoxFit.cover,))),
+                                                              ),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Container(
+                                                                    height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(100),
+                                                                        child: Image.asset("assets/hahareacticon.gif", fit: BoxFit.cover,))),
+                                                              ),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Container(
+                                                                    height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(100),
+                                                                        child: Image.asset("assets/wowreacticon.gif", fit: BoxFit.cover,))),
+                                                              ),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Container(
+                                                                    height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(100),
+                                                                        child: Image.asset("assets/cryreacticon.gif", fit: BoxFit.cover,))),
+                                                              ),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Container(
+                                                                    height: 50, width: 50, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(100),
+                                                                        child: Image.asset("assets/angryreacticon.gif", fit: BoxFit.cover,))),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      });
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
+                                                    Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
+                                                  ],
+                                                ),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
+                                                  Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
+                                                ],
+                                              ),
+                                              InkWell(
+                                                onTap: (){
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(
+                                                      backgroundColor: Colors.red,
+                                                      content: Text(
+                                                        "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.share, color: Colors.black.withOpacity(0.5), size: 20,),
+                                                    Text(" Share", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,),
-                                      SizedBox(width: 15,),
-                                      InkWell(
-                                          onTap: (){
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                backgroundColor: Colors.red,
-                                                content: Text(
-                                                  "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                              ),
-                                            );
-                                          },
-                                          child: Icon(Icons.close, color: Colors.black.withOpacity(0.5), size: 25,)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10,),
-                              ReadMoreText(
-                                'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-                                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),
-                                trimLines: 3,
-                                colorClickableText: Colors.grey,
-                                trimMode: TrimMode.Line,
-                                trimCollapsedText: '... See more',
-                                trimExpandedText: '... See less',
-                                moreStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                                lessStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                              ),
-                              SizedBox(height: 10,),
-                            ],
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 20,
-                            child: Image.asset("assets/logo.png", fit: BoxFit.cover,),
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: primaryColor,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.thumb_up, color: Colors.white, size: 12,))),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.favorite, color: Colors.white, size: 13,))),
-                                        ),
-                                        Text(" 61.2k", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Text("1.9k comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                        SizedBox(width: 15,),
-                                        Text("10 shares", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
+                                    Container(height: 8, color: Colors.grey[300],),
                                   ],
                                 ),
-                              ),
-                              SizedBox(height: 10,),
-                              Container(width: MediaQuery.of(context).size.width - 20, color: Colors.grey[300], height: 0.5,),
-                              SizedBox(height: 10,),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(
-                                            "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                        ),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.share, color: Colors.black.withOpacity(0.5), size: 20,),
-                                        Text(" Share", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(height: 8, color: Colors.grey[300],),
-                      ],
-                    ),
-                  ),
-                  Container(color: Colors.white,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                          child: Column(
-                            children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 40, width: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
-                                          borderRadius: BorderRadius.circular(100),
-                                        ),
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(100),
-                                            child: Image.network(ProfileController.to.profile.value!.profilePicture.toString(), fit: BoxFit.cover,)),
-                                      ),
-                                      SizedBox(width: 10,),
-                                      Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(ProfileController.to.profile.value!.name.toString(), style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
-                                              SizedBox(width: 3,),
-                                              ProfileController.to.profile.value!.verified.toString() == "1" ? Icon(Icons.verified, color: primaryColor, size: 15,) : Container(),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text("15h • ", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.normal),),
-                                              Icon(Icons.public, color: Colors.black.withOpacity(0.5), size: 15,),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,),
-                                      SizedBox(width: 15,),
-                                      InkWell(
-                                          onTap: (){
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                backgroundColor: Colors.red,
-                                                content: Text(
-                                                  "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                              ),
-                                            );
-                                          },
-                                          child: Icon(Icons.close, color: Colors.black.withOpacity(0.5), size: 25,)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10,),
-                              ReadMoreText(
-                                'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-                                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),
-                                trimLines: 3,
-                                colorClickableText: Colors.grey,
-                                trimMode: TrimMode.Line,
-                                trimCollapsedText: '... See more',
-                                trimExpandedText: '... See less',
-                                moreStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                                lessStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                              ),
-                              SizedBox(height: 10,),
-                            ],
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 20,
-                            child: Image.asset("assets/logo.png", fit: BoxFit.cover,),
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: primaryColor,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.thumb_up, color: Colors.white, size: 12,))),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.favorite, color: Colors.white, size: 13,))),
-                                        ),
-                                        Text(" 61.2k", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text("1.9k comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                        SizedBox(width: 15,),
-                                        Text("10 shares", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 10,),
-                              Container(width: MediaQuery.of(context).size.width - 20, color: Colors.grey[300], height: 0.5,),
-                              SizedBox(height: 10,),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(
-                                            "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                        ),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.share, color: Colors.black.withOpacity(0.5), size: 20,),
-                                        Text(" Share", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(height: 8, color: Colors.grey[300],),
-                      ],
-                    ),
-                  ),
-                  Container(color: Colors.white,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
-                          child: Column(
-                            children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 40, width: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
-                                          borderRadius: BorderRadius.circular(100),
-                                        ),
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(100),
-                                            child: Image.network(ProfileController.to.profile.value!.profilePicture.toString(), fit: BoxFit.cover,)),
-                                      ),
-                                      SizedBox(width: 10,),
-                                      Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(ProfileController.to.profile.value!.name.toString(), style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
-                                              SizedBox(width: 3,),
-                                              ProfileController.to.profile.value!.verified.toString() == "1" ? Icon(Icons.verified, color: primaryColor, size: 15,) : Container(),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text("15h • ", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.normal),),
-                                              Icon(Icons.public, color: Colors.black.withOpacity(0.5), size: 15,),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.more_horiz, color: Colors.black.withOpacity(0.5), size: 25,),
-                                      SizedBox(width: 15,),
-                                      InkWell(
-                                          onTap: (){
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                backgroundColor: Colors.red,
-                                                content: Text(
-                                                  "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                              ),
-                                            );
-                                          },
-                                          child: Icon(Icons.close, color: Colors.black.withOpacity(0.5), size: 25,)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10,),
-                              ReadMoreText(
-                                'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-                                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),
-                                trimLines: 3,
-                                colorClickableText: Colors.grey,
-                                trimMode: TrimMode.Line,
-                                trimCollapsedText: '... See more',
-                                trimExpandedText: '... See less',
-                                moreStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                                lessStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black.withOpacity(0.5)),
-                              ),
-                              SizedBox(height: 10,),
-                            ],
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 20,
-                            child: Image.asset("assets/logo.png", fit: BoxFit.cover,),
-                          ),
-                        ),
-                        Container(width: MediaQuery.of(context).size.width, color: Colors.grey[300], height: 0.3,),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: primaryColor,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.thumb_up, color: Colors.white, size: 12,))),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 1),
-                                          child: Container(
-                                              height: 18, width: 18,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius: BorderRadius.circular(100)
-                                              ),
-                                              child: Center(child: Icon(Icons.favorite, color: Colors.white, size: 13,))),
-                                        ),
-                                        Text(" 61.2k", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text("1.9k comments", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                        SizedBox(width: 15,),
-                                        Text("10 shares", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.normal),),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 10,),
-                              Container(width: MediaQuery.of(context).size.width - 20, color: Colors.grey[300], height: 0.5,),
-                              SizedBox(height: 10,),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.thumb_up_alt_outlined, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Like", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.chat_bubble_outline, color: Colors.black.withOpacity(0.5), size: 20,),
-                                      Text(" Comment", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(
-                                            "This feature is not created!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-                                        ),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.share, color: Colors.black.withOpacity(0.5), size: 20,),
-                                        Text(" Share", style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 16, fontWeight: FontWeight.bold),),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(height: 8, color: Colors.grey[300],),
-                      ],
-                    ),
-                  ),
+                              );
+                            },
+                            itemCount: snapshot.data?.length ?? 0,
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                      stream: PostModel.getPosts()),
                 ],
               ),
             ),
