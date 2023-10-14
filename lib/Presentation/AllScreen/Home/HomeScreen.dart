@@ -69,30 +69,35 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SingleChildScrollView(
               child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                 children: [Container(),
-                  Container(height: 70, color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: ClipRRect(
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.CREATEPOST);
+                  },
+                    child: Container(height: 70, color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
                                   borderRadius: BorderRadius.circular(100),
-                                  child: Image.asset("assets/sampleprofilepicture.png", fit: BoxFit.cover,)),
-                            ),
-                            SizedBox(width: 10,),
-                            Text("What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),)
-                          ],
-                        ),
-                        Icon(Icons.photo_library, color: Colors.green, size: 28,)
-                      ],
+                                ),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.asset("assets/sampleprofilepicture.png", fit: BoxFit.cover,)),
+                              ),
+                              SizedBox(width: 10,),
+                              Text("What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),)
+                            ],
+                          ),
+                          Icon(Icons.photo_library, color: Colors.green, size: 28,)
+                        ],
+                      ),
                     ),
-                  ),
+                    ),
                   ),
                   Container(height: 8, color: Colors.grey[300],),
 
