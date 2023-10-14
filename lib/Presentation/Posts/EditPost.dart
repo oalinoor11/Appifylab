@@ -198,6 +198,21 @@ class _EditPostState extends State<EditPost> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
+                  InkWell(
+                      onTap: (){
+                        post.delete();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              "Post Deleted!", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+                          ),
+                        );
+                        Get.offAllNamed(AppRoutes.MAINSCREEN);
+                      },
+                      child: Text("Delete Post", style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold),)),
+                  SizedBox(height: 20,),
                 ],
               ),
             ),
